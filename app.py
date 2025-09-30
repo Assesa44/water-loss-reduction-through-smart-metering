@@ -2,12 +2,20 @@ import streamlit as st
 import joblib
 import pandas as pd
 from io import BytesIO
+import os
 
-# Load your trained model
-model = joblib.load("kmeans_model.pkl")  
+# Define correct model path (relative to app.py in root folder)
+MODEL_PATH = os.path.join("Notebooks", "Exploratory", "kmeans_model.pkl")
 
+# Load trained model
+try:
+    model = joblib.load(MODEL_PATH)
+except Exception as e:
+    st.error(f" Failed to load model from {MODEL_PATH}. Error: {e}")
+    st.stop()
+
+# Streamlit App Title
 st.title("💧 Water Loss Reduction - Smart Metering Clustering")
-
 st.write("You can either enter details manually or upload a CSV file for bulk clustering.")
 
 # Predefined insights per cluster
@@ -34,7 +42,7 @@ if st.button("Predict Cluster (Single)"):
     }])
 
     prediction = model.predict(input_data)
-    cluster = prediction[0]
+    cluster = int(prediction[0])  # ensure integer for indexing
 
     st.success(f"🔎 This customer belongs to **Cluster {cluster}**")
 
@@ -48,13 +56,15 @@ if st.button("Predict Cluster (Single)"):
     elif cluster == 2:
         st.warning("💡 Recommendation: Prioritize smart metering rollout in commercial/industrial zones.")
 
-
 # =========================
 # CSV Upload & Batch Prediction
 # =========================
 st.subheader("📂 Upload CSV for Batch Prediction")
 
-uploaded_file = st.file_uploader("Upload a CSV file with BILL_VOLUME, BILL_AMOUNT, and METER_SIZE columns", type=["csv"])
+uploaded_file = st.file_uploader(
+    "Upload a CSV file with BILL_VOLUME, BILL_AMOUNT, and METER_SIZE columns", 
+    type=["csv"]
+)
 
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
@@ -62,22 +72,24 @@ if uploaded_file is not None:
     st.write("📊 Uploaded Data Preview:")
     st.dataframe(data.head())
 
-    # Predict clusters
-    predictions = model.predict(data[["BILL_VOLUME", "BILL_AMOUNT", "METER_SIZE"]])
-    data["Cluster"] = predictions
-    data["Insights"] = data["Cluster"].map(cluster_insights)
+    try:
+        predictions = model.predict(data[["BILL_VOLUME", "BILL_AMOUNT", "METER_SIZE"]])
+        data["Cluster"] = predictions
+        data["Insights"] = data["Cluster"].map(cluster_insights)
 
-    st.success("✅ Clusters assigned successfully!")
-    st.dataframe(data.head())
+        st.success("✅ Clusters assigned successfully!")
+        st.dataframe(data.head())
 
-    # Download button
-    output = BytesIO()
-    data.to_csv(output, index=False)
-    output.seek(0)
+        # Download results
+        output = BytesIO()
+        data.to_csv(output, index=False)
+        output.seek(0)
 
-    st.download_button(
-        label="⬇️ Download Results as CSV",
-        data=output,
-        file_name="clustered_results.csv",
-        mime="text/csv"
-    )
+        st.download_button(
+            label="⬇️ Download Results as CSV",
+            data=output,
+            file_name="clustered_results.csv",
+            mime="text/csv"
+        )
+    except Exception as e:
+        st.error(f"❌ Error during batch prediction: {e}")
