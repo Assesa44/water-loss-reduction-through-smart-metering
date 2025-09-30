@@ -7,9 +7,15 @@ import os
 # Define correct model path (relative to app.py in root folder)
 MODEL_PATH = os.path.join("Notebooks", "Exploratory", "kmeans_model.pkl")
 
-# Load trained model
+# =========================
+# Cache Model Loading
+# =========================
+@st.cache_resource
+def load_model():
+    return joblib.load(MODEL_PATH)
+
 try:
-    model = joblib.load(MODEL_PATH)
+    model = load_model()
 except Exception as e:
     st.error(f" Failed to load model from {MODEL_PATH}. Error: {e}")
     st.stop()
@@ -43,11 +49,13 @@ if st.button("Predict Cluster (Single)"):
 
     prediction = model.predict(input_data)
     cluster = int(prediction[0])  # ensure integer for indexing
+    input_data["Cluster"] = cluster
+    input_data["Insights"] = cluster_insights.get(cluster, "No insight available")
 
     st.success(f"🔎 This customer belongs to **Cluster {cluster}**")
 
-    if cluster in cluster_insights:
-        st.info(cluster_insights[cluster])
+    # Show additional info
+    st.dataframe(input_data)
 
     if cluster == 0:
         st.warning("💡 Recommendation: Focus on leak detection in residential areas.")
@@ -55,6 +63,18 @@ if st.button("Predict Cluster (Single)"):
         st.warning("💡 Recommendation: Monitor billing compliance for SMEs.")
     elif cluster == 2:
         st.warning("💡 Recommendation: Prioritize smart metering rollout in commercial/industrial zones.")
+
+    # Enable CSV download for single prediction
+    output_single = BytesIO()
+    input_data.to_csv(output_single, index=False)
+    output_single.seek(0)
+
+    st.download_button(
+        label="⬇️ Download Single Prediction as CSV",
+        data=output_single,
+        file_name="single_prediction.csv",
+        mime="text/csv"
+    )
 
 # =========================
 # CSV Upload & Batch Prediction
@@ -69,7 +89,7 @@ uploaded_file = st.file_uploader(
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
 
-    st.write("📊 Uploaded Data Preview:")
+    st.write(" Uploaded Data Preview:")
     st.dataframe(data.head())
 
     try:
@@ -86,10 +106,10 @@ if uploaded_file is not None:
         output.seek(0)
 
         st.download_button(
-            label="⬇️ Download Results as CSV",
+            label="⬇ Download Batch Results as CSV",
             data=output,
             file_name="clustered_results.csv",
             mime="text/csv"
         )
     except Exception as e:
-        st.error(f"❌ Error during batch prediction: {e}")
+        st.error(f" Error during batch prediction: {e}")
