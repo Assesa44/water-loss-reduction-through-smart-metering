@@ -1,4 +1,40 @@
 # **Nairobi Water Loss Analysis & Clustering**
+```
+🗂️ Repository Structure
+├── Data/                # Raw and processed datasets (not uploaded here for privacy)
+├── notebooks/           # Jupyter notebooks
+│   ├── nairobi_water_loss.ipynb   # Main analysis & modeling notebook
+├── README.md            # Project documentation (this file)
+├── requirements.txt     # Python dependencies
+```
+⚙️ Setup Instructions
+1️⃣ Clone the repository
+``` bash
+git clone https://github.com/Assesa44/nairobi-water-loss.git
+cd nairobi-water-loss
+```
+
+2️⃣ Create and activate a virtual environment
+``` bash
+python -m venv venv
+source venv/bin/activate      # On Mac/Linux
+venv\Scripts\activate         # On Windows
+```
+
+3️⃣ Install dependencies
+``` bash
+pip install -r requirements.txt
+```
+
+``` bash
+4️⃣ Launch Jupyter Notebook
+jupyter notebook
+```
+
+Then open:
+
+`notebooks/nairobi_water_loss.ipynb`
+
 ## **Business Understanding**
 ### **Background**
 The Nairobi City Water and Sewerage Company (NCWSC), responsible for supplying clean and safe water to Nairobi residents, despite heavily investing in water infrastructure, struggles with non-revenue water (NRW), water that is produced but not billed due to physical losses (leakages, illegal connections) and commercial losses (meter inaccuracies, billing errors).
@@ -15,7 +51,7 @@ This project analyzes water consumption and billing data from Nairobi to detect 
 
 This project's ultimate goal is to support smart metering strategies and provide actionable insights to reduce water loss.
 
-### **STAKEHOLDERS**
+### **Stakeholders**
 Some of the major stakeholders include;
 
 - NCWSC Management & Operations Teams – oversee production, distribution, and billing; directly responsible for reducing non-revenue water.
@@ -110,128 +146,159 @@ This section outlines key findings from the analysis and offers actionable recom
 
 
 ### Key Insights
+#### *Water Production, Usage, and Loss Trends*
+![alt text](image-1.png)
 
-```
-🗂️ Repository Structure
-├── Data/                # Raw and processed datasets (not uploaded here for privacy)
-├── notebooks/           # Jupyter notebooks
-│   ├── nairobi_water_loss.ipynb   # Main analysis & modeling notebook
-├── README.md            # Project documentation (this file)
-├── requirements.txt     # Python dependencies
-```
-⚙️ Setup Instructions
-1️⃣ Clone the repository
-``` bash
-git clone https://github.com/Assesa44/nairobi-water-loss.git
-cd nairobi-water-loss
-```
+Between August 2024 and May 2025, the data showed a consistent gap between the volume of water produced and the volume that is ultimately billed to consumers. On average, production ranged between 15 and 19 million units per month, while billed consumption remained much lower, hovering around 10 million units. This gap translates into substantial losses, typically between 6 and 9 million units every month.
 
-2️⃣ Create and activate a virtual environment
-``` bash
-python -m venv venv
-source venv/bin/activate      # On Mac/Linux
-venv\Scripts\activate         # On Windows
-```
+The overall picture suggests that, despite stable and at times rising production levels, more than 40 percent of the water produced is not being accounted for in revenue.
 
-3️⃣ Install dependencies
-``` bash
-pip install -r requirements.txt
-```
+#### *Water Usage by Region*
 
-``` bash
-4️⃣ Launch Jupyter Notebook
-jupyter notebook
-```
+![alt text](image.png)
 
-Then open:
+Roysambu recorded the highest billed volume at over 19 million units, standing out as the single largest contributor. Westlands followed with nearly 14.3 million units, while Lower Embakasi and Dagoretti also reported substantial billed volumes, exceeding 12.5 million and 11.7 million units respectively.
 
-`notebooks/nairobi_water_loss.ipynb`
+In the mid-range, Central and Langata registered billed volumes of approximately 10.2 million and 9.5 million units, with Kasarani slightly lower at 8.5 million units. Upper Embakasi trailed further behind at around 6.4 million units.
 
-📊 Project Workflow
-🔹 Data Understanding
+The lowest billed volumes were concentrated in New Central, Informal Settlements, and New Informal Settlements, which recorded 4.7 million, 0.9 million, and 0.38 million units respectively
 
-Explore water amount, sewer amount, and bill amount across 200,000+ consumers.
+#### *Cluster Distribution*
 
-Identify missing values, duplicates, and outliers.
+![alt text](image-2.png)
 
-🔹 Data Preparation
+##### *Interpretation by Cluster*
 
-Feature scaling using StandardScaler.
+**Cluster 0**
 
-Feature engineering (derived ratios between bill, water, and sewer amounts).
+`WATER_AMOUNT = 11,873.80`, `SEWER_AMOUNT = 6,965`, `BILL_AMOUNT = 18,840`, `BILL_VOLUME = 178.29`, and `METER_SIZE = 0.56`. By the look of cluster 0's profile, this looks like small users (households, small shops) characterized by:
 
-Filtering out anomalies for cleaner clustering results.
+- Very low consumption.
 
-🔹 Modeling & Clustering
+- Very small bills.
 
-Baseline model with K-Means.
+- Small meter sizes (~½ inch).
 
-Model tuning using GridSearchCV with silhouette scoring.
+**Cluster 1**
 
-Gaussian Mixture Models (GMM) for soft clustering and probability-based segmentation.
+`WATER_AMOUNT = 34,897.60`, `SEWER_AMOUNT = 52,082.63 `, `BILL_AMOUNT = 86,980.80`, `BILL_VOLUME = 960.01`, and `METER_SIZE = 2.02`. This looks like medium users (apartment blocks, schools, mid-sized businesses) characterized by:
 
-🔹 Evaluation Metrics
+- Moderate water usage.
 
-Silhouette Score
+- Medium-sized bills.
 
-Calinski-Harabasz Index
+- Meter sizes ~2.02  inches.
 
-Davies-Bouldin Index
 
-🔹 Insights
+**Cluster 2**
 
-Cluster 0: Majority of consumers, low individual contribution.
+`WATER_AMOUNT = 3,345,803.48`, `SEWER_AMOUNT = 1,672,711.49`, `BILL_AMOUNT = 5,018,514.96`, `BILL_VOLUME = 50,188.26`, and `METER_SIZE = 6.35`. This cluster contains the big consumers (industries, large businesses, commercial entities) characterized by:
 
-Cluster 1: Small group, but heavy revenue contributors (likely industries).
+- Extremely high consumption.
 
-Cluster 2: Smaller niche, still high bills (possible estates or premium consumers).
+- Very large bills.
 
-🛠️ Tech Stack
+- Meter sizes around 6.35 inches, which is huge.
 
-Python
+This group likely contributes the majority of revenue.
 
-Pandas, NumPy for data manipulation
+### **Strategic Recommendations**
+#### *Technical Recommendations*
 
-Matplotlib, Seaborn for visualization
+1. Smart Meter Deployment Strategy
 
-Scikit-learn for clustering & pipelines
+We recommend the company start with high-consumption or high-loss zones (e.g., industries, commercial consumers, or clusters with suspicious consumption patterns from the KMeans) by using a phased rollout (pilot → expansion → citywide coverage) to minimize cost and test efficiency.
 
-Jupyter Notebook for analysis
+2. Real-Time Monitoring & Alerts
 
-🚀 How to Reproduce Results
+Before installing the smart meters, ensure that the devices can send usage data hourly/daily and also trigger automatic alerts when they detect:
 
-Open the notebook nairobi_water_loss.ipynb.
+- Sudden spikes (possible leaks).
 
-Run all cells in order.
+- Zero consumption over long periods (possible illegal connection).
+
+- Continuous flow at odd hours (possible burst pipe).
+
+#### *Operational Recommendations*
+
+1. Data Analytics for NRW Reduction
+
+The company should use the clustered customers to identify risk groups:
+
+- Overlapping clusters → possible inconsistent billing.
+
+- Outliers → possible illegal connections or faulty meters.
+
+2. Use predictive models to estimate expected usage vs. actual to flag anomalies.
+
+3. Proactive Maintenance
+
+The company should also schedule field checks where smart meters report unusual patterns, replace faulty meters quickly (calibration drift = hidden NRW).
+
+4. Automated Billing & Transparency
+
+We recommend that the company should link the smart meters directly to billing systems. By doing this, the company reduces human interference in meter reading, curbing corruption & under-reporting.
+
+#### *Policy & Governance Recommendations*
+
+1. NRW Reduction Targets
+
+The company should set targets (e.g., reduce NRW from 45% → 25% in 3 years), and regularly publish performance dashboards to track progress.
+
+2. Public–Private Partnerships
+
+We also recommend that the company partner with tech providers for cheaper smart meter solutions.
+
+## **Conclusion**
+This project applied KMeans Clustering to segment over 200,000 water consumers in Nairobi, with the goal of identifying consumption patterns and uncovering potential areas of Non-Revenue Water (NRW) losses.
+
+The clustering revealed distinct consumer groups — from low-volume domestic users to high-volume industrial and commercial consumers — highlighting areas where water distribution inefficiencies and losses may be occurring.
+
+By combining data-driven insights with recommendations for smart metering, real-time monitoring, and targeted policy interventions, this analysis provides a foundation for tackling one of the biggest challenges in Nairobi’s water supply: reducing NRW and ensuring sustainable water resource management.
+
+The results demonstrate how machine learning can support utilities in making evidence-based decisions, optimizing resource allocation, and improving service delivery for millions of residents.
+
+Future improvements may include integrating geospatial data, seasonal consumption trends, and real-time IoT sensor data to further enhance accuracy and impact.
+
+##### **Tech Stack**
+
+- Python
+
+- Pandas, NumPy for data manipulation
+
+- Matplotlib, Seaborn for visualization
+
+- Scikit-learn for clustering & pipelines
+
+- Jupyter Notebook for analysis
+
+
+##### **How to Reproduce Results**
+
+1. Open the notebook nairobi_water_loss.ipynb.
+
+2. Run all cells in order.
 
 The notebook will:
 
-Preprocess the data
+- Preprocess the data
 
-Apply clustering models
+- Apply clustering models
 
-Visualize clusters and report metrics
+- Visualize clusters and report metrics
 
-📌 Recommendations
+## **🤝 Contribution**
 
-Rollout smart metering for Cluster 1 (industries) to monitor high-value consumers.
+1. Fork the repo
 
-Investigate non-revenue water in Cluster 0 where consumer count is large but individual bills are low.
+Create a new branch: ```git checkout -b feature-name```
 
-Use probability-based segmentation (GMM) for more flexible consumer classification.
+Commit your changes: ```git commit -m "Add new feature"```
 
-🤝 Contribution
+Push to the branch: ```git push origin feature-name```
 
-Fork the repo
+2. Submit a pull request
 
-Create a new branch: git checkout -b feature-name
-
-Commit your changes: git commit -m "Add new feature"
-
-Push to the branch: git push origin feature-name
-
-Submit a pull request
-
-📄 License
+## **📄 License**
 
 This project is licensed under the MIT License.
