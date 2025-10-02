@@ -26,12 +26,12 @@ st.image(logo, width=150)  # slightly bigger logo
 st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown(
-    "<h1 style='text-align: center; margin-top: -10px;'>💧 Water Loss Reduction - Smart Metering Clustering</h1>",
+    "<h1 style='text-align: center; margin-top: -10px;'>Water Loss Reduction - Smart Metering Clustering</h1>",
     unsafe_allow_html=True
 )
 
 
-st.markdown("## 📌 Project Description")
+st.markdown("## Project Description")
 st.info(
     "This app applies **KMeans clustering** to group water consumers "
     "based on meter size, bill volume, and bill amount. "
@@ -39,12 +39,6 @@ st.info(
 )
 
 
-st.markdown("## 🔹 Model Clusters")
-st.success("""  
-- **Cluster 0**: Low usage, small meters, minimal billing — Residential.  
-- **Cluster 1**: Medium usage, varied meters, moderate bills — SMEs.  
-- **Cluster 2**: High usage, large meters, high bills — Industrial/Commercial.  
-""")
 
 st.write("You can either enter details manually or upload a CSV file for batch clustering.")
 cluster_insights = {
@@ -72,7 +66,7 @@ if st.button("Predict Cluster (Single)"):
     input_data["Cluster"] = cluster
     input_data["Insights"] = cluster_insights.get(cluster, "No insight available")
 
-    st.success(f"🔎 This customer belongs to **Cluster {cluster}**")
+    st.success(f"This customer belongs to **Cluster {cluster}**")
     st.table(input_data)
 
     if cluster == 0:
@@ -104,7 +98,7 @@ uploaded_file = st.file_uploader(
 
 if uploaded_file is not None:
     data = pd.read_csv(uploaded_file)
-    st.write("📊 Uploaded Data Preview:")
+    st.write("Uploaded Data Preview:")
     st.dataframe(data.head())
 
     try:
@@ -112,7 +106,7 @@ if uploaded_file is not None:
         data["Cluster"] = predictions
         data["Insights"] = data["Cluster"].map(cluster_insights)
 
-        st.success("✅ Clusters assigned successfully!")
+        st.success("Clusters assigned successfully!")
         st.dataframe(data.head())
 
         # Download results
@@ -127,11 +121,11 @@ if uploaded_file is not None:
             mime="text/csv"
         )
     except Exception as e:
-        st.error(f"❌ Error during batch prediction: {e}")
+        st.error(f"Error during batch prediction: {e}")
 
 
 st.markdown("---")
-st.markdown("### 📬 Contact")
+st.markdown("###Contact")
 st.write("Developed by **Group3**")
 st.write("✉️ Email: veesandra30@gmail.com")
 st.write("[🌐 GitHub](https://github.com/Assesa44/water-loss-reduction-through-smart-metering.git)")
