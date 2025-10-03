@@ -22,7 +22,7 @@ except Exception as e:
 
 
 st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
-st.image(logo, width=150)  # slightly bigger logo
+st.image(logo, width=400)  # slightly bigger logo
 st.markdown("</div>", unsafe_allow_html=True)
 
 st.markdown(
