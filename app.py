@@ -5,7 +5,6 @@ from io import BytesIO
 import os
 from PIL import Image
 
-
 logo = Image.open("logo.png")
 
 MODEL_PATH = os.path.join("Notebooks", "Exploratory", "kmeans_model.pkl")
