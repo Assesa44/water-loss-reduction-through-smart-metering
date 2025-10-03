@@ -155,7 +155,6 @@ This section outlines key findings from the analysis and offers actionable recom
 
 ### Key Insights
 #### *Water Production, Usage, and Loss Trends*
-C:\Users\Johny\Documents\moringa\phase4\project\water-loss-reduction-through-smart-metering\images\loss_trends.png
 ![alt text](/images/loss_trends.png)
 
 Between August 2024 and May 2025, the data showed a consistent gap between the volume of water produced and the volume that is ultimately billed to consumers. On average, production ranged between 15 and 19 million units per month, while billed consumption remained much lower, hovering around 10 million units. This gap translates into substantial losses, typically between 6 and 9 million units every month.
