@@ -144,6 +144,11 @@ We tested multiple models and tuned them iteratively:
 
 ---
 
+## **Deployment and Tableau dashboard**
+The best model was deployed on Render here is the link -- ([Deployment link](https://water-loss-reduction-through-smart.onrender.com))
+
+Here is the link to the Tableau dashboard -- ([Tableau dashboard](https://public.tableau.com/app/profile/leejay.mwakireti/viz/Water_Loss_Reduction_by_Smart_Metering/Dashboard1))
+
 ## **Insights & Recommendations**
 This section outlines key findings from the analysis and offers actionable recommendations for stakeholders, particularly the NCWSC board.
 
