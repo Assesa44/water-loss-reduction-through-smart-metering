@@ -1,0 +1,5 @@
+[theme]
+primaryColor = "#0066cc"            # Buttons, sliders, highlights
+backgroundColor = "#f8f9fa"         # Main background (light grey)
+textColor = "#212529"               # Dark grey text
+font = "sans serif"                 # Options: "sans serif", "serif", "monospace"
