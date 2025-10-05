@@ -11,6 +11,7 @@
 ├── requirements.txt     # Python dependencies
 ```
 ⚙️ Setup Instructions
+
 1️⃣ Clone the repository
 ``` bash
 git clone https://github.com/Assesa44/nairobi-water-loss.git
@@ -144,11 +145,6 @@ We tested multiple models and tuned them iteratively:
 
 ---
 
-## **Deployment and Tableau dashboard**
-The best model was deployed on Render here is the link -- ([Deployment link](https://water-loss-reduction-through-smart.onrender.com))
-
-Here is the link to the Tableau dashboard -- ([Tableau dashboard](https://public.tableau.com/app/profile/leejay.mwakireti/viz/Water_Loss_Reduction_by_Smart_Metering/Dashboard1))
-
 ## **Insights & Recommendations**
 This section outlines key findings from the analysis and offers actionable recommendations for stakeholders, particularly the NCWSC board.
 
@@ -197,7 +193,6 @@ The lowest billed volumes were concentrated in New Central, Informal Settlements
 - Medium-sized bills.
 
 - Meter sizes ~2.02  inches.
-
 
 **Cluster 2**
 
@@ -258,6 +253,8 @@ The company should set targets (e.g., reduce NRW from 45% → 25% in 3 years), a
 
 We also recommend that the company partner with tech providers for cheaper smart meter solutions.
 
+---
+
 ## **Conclusion**
 This project applied KMeans Clustering to segment over 200,000 water consumers in Nairobi, with the goal of identifying consumption patterns and uncovering potential areas of Non-Revenue Water (NRW) losses.
 
@@ -268,6 +265,8 @@ By combining data-driven insights with recommendations for smart metering, real-
 The results demonstrate how machine learning can support utilities in making evidence-based decisions, optimizing resource allocation, and improving service delivery for millions of residents.
 
 Future improvements may include integrating geospatial data, seasonal consumption trends, and real-time IoT sensor data to further enhance accuracy and impact.
+
+---
 
 ##### **Tech Stack**
 
@@ -281,6 +280,7 @@ Future improvements may include integrating geospatial data, seasonal consumptio
 
 - Jupyter Notebook for analysis
 
+---
 
 ##### **How to Reproduce Results**
 
@@ -296,6 +296,8 @@ The notebook will:
 
 - Visualize clusters and report metrics
 
+---
+
 ## **🤝 Contribution**
 
 1. Fork the repo
@@ -307,6 +309,34 @@ Commit your changes: ```git commit -m "Add new feature"```
 Push to the branch: ```git push origin feature-name```
 
 2. Submit a pull request
+
+---
+
+## **Project Management Notes**
+
+Due to the large size of the original datasets and generated clustering outputs, these files were excluded from version control for efficiency and storage management.
+
+Specifically:
+
+- The main dataset (nairobi_water_usage.csv and related files) and intermediate processed data were added to the .gitignore file.
+
+- Cluster output CSVs (e.g., clustered_consumers.csv, cluster_summary.csv) were also excluded to keep the repository lightweight.
+
+These files are available separately through the download links provided below.
+
+## **Final Product**
+
+The following resources summarize the final outputs of this project:
+
+| Resource	| Description	| Access Link |
+|------ | ------ | ------ |
+| Cluster Outputs	| Final clustering results (consumer groups, billing summaries, and profiles) |	[Download Cluster Outputs](https://drive.google.com/drive/folders/1IoFe4s0lE1ySGiu9jE3l3gCzGNemxXrD?usp=drive_link) |
+|Deployed App	| API endpoint to access the clustering and prediction model.	| [Water Loss Reduction App](https://water-loss-reduction-through-smart.onrender.com) |
+| Tableau Dashboard	| Interactive dashboard summarizing insights and trends. | [View Dashboard](https://public.tableau.com/app/profile/leejay.mwakireti/viz/Water_Loss_Reduction_by_Smart_Metering/Dashboard1) |
+
+💡 Note: Cluster outputs and datasets are stored externally to preserve repository performance and comply with GitHub’s file size limits.
+
+---
 
 ## **📄 License**
 
