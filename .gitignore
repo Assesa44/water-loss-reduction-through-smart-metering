@@ -1,3 +1,7 @@
+# Data
+Moringa_NCWSC_DATASET.xlsx
+nwcs_dataset.parquet
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
