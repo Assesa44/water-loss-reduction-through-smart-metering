@@ -1,6 +1,7 @@
 # Data
 Moringa_NCWSC_DATASET.xlsx
 nwcs_dataset.parquet
+clusters_output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
