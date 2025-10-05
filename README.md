@@ -318,9 +318,9 @@ Due to the large size of the original datasets and generated clustering outputs,
 
 Specifically:
 
-- The main dataset (nairobi_water_usage.csv and related files) and intermediate processed data were added to the .gitignore file.
+- The main dataset (Moringa_NCWSC_DATASET.xlsx and related files) and intermediate processed data were added to the .gitignore file.
 
-- Cluster output CSVs (e.g., clustered_consumers.csv, cluster_summary.csv) were also excluded to keep the repository lightweight.
+- Cluster output CSVs (e.g., clusters_output folder) were also excluded to keep the repository lightweight.
 
 These files are available separately through the download links provided below.
 
